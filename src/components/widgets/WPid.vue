@@ -1,5 +1,5 @@
 <template>
-<div>
+<widget-large id="widget-WPid">
    <!-- This card contains information of the PID-->
   <q-card class="WPid" @click="$refs.settingsModal.open()" inline>
     <q-card-title class="bigger">
@@ -30,7 +30,7 @@
       </div>
     </q-card-main>
     <q-card-separator inline />
-    <q-card-main :class="disabledClass">
+    <q-card-main :class="{disabled: !settings.enabled}">
       <!-- Display the propotional, intergral and derivative-->
       <div class='row'>
         <div class="col-3">
@@ -94,7 +94,7 @@
               <q-input inverted color="primary" v-model="input.setPoint" type="number" />
             </q-field>
           </div>
-          <q-checkbox v-model= "settings.enabled" @click="changeBackground()" label="Settings enabled"/>
+          <q-checkbox v-model="settings.enabled" @click="changeBackground()" label="Settings enabled"/>
           <hr>
           <!-- Settings for the filter-->
           <q-field label="Filtering"/>
@@ -193,10 +193,12 @@
       </q-modal-layout>
     <q-btn color="primary" @click="$refs.settingsModal.close()">Close</q-btn>
   </q-modal>
-</div>
+</widget-large>
 </template>
 
 <script>
+import WidgetLarge from './WidgetLarge.vue';
+
 import {
   QCard,
   QCardTitle,
@@ -230,6 +232,7 @@ export default {
     QField,
     QCheckbox,
     QSelect,
+    WidgetLarge,
   },
   props: {
   },
@@ -271,12 +274,6 @@ export default {
   created() {
   },
   computed: {
-    disabledClass() {
-      if (this.setting.enabled) {
-        return 'enabled';
-      }
-      return 'disabled';
-    },
   },
   methods: {
   },
@@ -288,10 +285,4 @@ export default {
 </script>
 
 <style lang="stylus">
-.enabled {
-
-}
-.disabled {
-  background-color = black;
-}
 </style>
