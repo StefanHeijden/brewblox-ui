@@ -1,63 +1,40 @@
 <template>
 <widget-large id="widget-WPid">
    <!-- This card contains information of the PID-->
-  <q-card class="WPid" @click="$refs.settingsModal.open()" inline>
-    <q-card-title class="bigger">
-      PID regelaar
-    </q-card-title>
-    <q-card-separator inline />
-    <q-card-main>
-      <!-- Display the input and setpoint-->
-      <div class="row justify-around">
-        <q-field color="primary" label= "Input">
-          <div>{{input.value}}</div>
-        </q-field>
-        <q-field color="primary" label= "setPoint">
-          <q-field color="primary" :label= "input.setPoint | round(2, true)" />
-        </q-field>
-      </div>
-    </q-card-main>
-    <q-card-separator inline />
-    <q-card-main :class="{disabled: !settings.enabled}">
-      <!-- Display the propotional, intergral and derivative-->
-      <div class='row'>
-        <div class="col-3">
-          <q-field inverted class="row" color="primary" label= "P" /> 
-          <q-field>
-            <q-input class="row" inverted readonly color="primary" v-model="state.p" type="number" />
-          </q-field>
-        </div>
-        <div class="col-1" />
-        <div class="col-3">
-          <q-field inverted class="row" color="primary" label= "I" /> 
-          <q-field>
-            <q-input class="row" inverted readonly color="primary" v-model="state.i" type="number" />
-          </q-field>
-        </div>
-        <div class="col-1" />
-          <div class="col-3">
-            <q-field inverted class="row" color="primary" label= "D" /> 
-            <q-field>
-              <q-input class="row" inverted readonly color="primary" v-model="state.d" type="number" />
-            </q-field>
-          </div>
-      </div>
-    </q-card-main>
-    <q-card-separator inline />
-    <q-card-main>
-      <!-- Display Output-->
-      <div class='row'>
-        <div class="col-4" />
-          <div class="col-3">
-            <q-field inverted class="row" color="primary" label= "Output" /> 
-            <q-field>
-              <q-input class="row" inverted readonly color="primary" v-model="output.value" type="number" />
-            </q-field>
-          </div>
-        <div class="col-5" />
-      </div>
-    </q-card-main>
-  </q-card>
+  <q-list class="center" @click="$refs.settingsModal.open()" separator sparse>
+    <q-list-header>PID regelaar</q-list-header>
+    <q-item class="center">
+      <q-item-main>
+        <q-item-tile label>Input</q-item-tile>
+        <q-item-tile sublabel>{{ input.value | round(2, true) }}</q-item-tile>
+      </q-item-main>
+      <q-item-main>
+        <q-item-tile label>Setpoint</q-item-tile>
+        <q-item-tile sublabel>{{ input.setPoint | round(2, true) }}</q-item-tile>
+      </q-item-main>
+    </q-item>
+    <q-item :class="{disabled: !settings.enabled}">
+      <q-item-main class="center">
+        <q-item-tile label>P</q-item-tile>
+        <q-item-tile sublabel>{{ state.p | round(2, true) }}</q-item-tile>
+      </q-item-main>
+      <q-item-main class="center">
+        <q-item-tile label>I</q-item-tile>
+        <q-item-tile sublabel>{{ state.i | round(2, true) }}</q-item-tile>
+      </q-item-main>
+      <q-item-main class="center">
+        <q-item-tile label>D</q-item-tile>
+        <q-item-tile sublabel>{{ state.d | round(2, true) }}</q-item-tile>
+      </q-item-main>
+    </q-item>
+    <q-item>
+      <q-item-main class="center">
+        <q-item-tile label>Output</q-item-tile>
+        <q-item-tile sublabel>{{ output.value | round(2, true) }}</q-item-tile>
+      </q-item-main>
+    </q-item>
+  </q-list>
+
   <q-modal ref="settingsModal" maximized>
     <!-- This modal displays the settings for the PID when the card is clicked/tapped-->
       <q-modal-layout>
@@ -188,10 +165,13 @@
 import WidgetLarge from './WidgetLarge.vue';
 
 import {
-  QCard,
-  QCardTitle,
-  QCardMain,
-  QCardSeparator,
+  QList,
+  QListHeader,
+  QItem,
+  QItemSeparator,
+  QItemSide,
+  QItemMain,
+  QItemTile,
   QModal,
   QModalLayout,
   QToolbar,
@@ -207,10 +187,13 @@ import {
 export default {
   name: 'WPid',
   components: {
-    QCard,
-    QCardTitle,
-    QCardMain,
-    QCardSeparator,
+    QList,
+    QListHeader,
+    QItem,
+    QItemSeparator,
+    QItemSide,
+    QItemMain,
+    QItemTile,
     QModal,
     QModalLayout,
     QToolbar,

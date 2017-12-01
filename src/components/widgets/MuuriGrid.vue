@@ -130,7 +130,6 @@
     margin: 5px;
     z-index: 1;
     background: #000;
-    color: #fff;
   }
   .item.muuri-dragging {
     z-index: 3;
