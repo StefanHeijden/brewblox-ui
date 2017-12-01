@@ -28,6 +28,13 @@ import 'quasar-extras/material-icons';
 // import 'quasar-extras/fontawesome'
 // import 'quasar-extras/animate'
 
+Vue.filter('round', (value, accuracy, keep) => {
+  if (typeof value !== 'number') return value;
+  const fixed = value.toFixed(accuracy);
+  return keep ? fixed : +fixed;
+});
+
+
 Quasar.start(() => {
   /* eslint-disable no-new */
   new Vue({

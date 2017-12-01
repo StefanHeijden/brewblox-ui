@@ -8,25 +8,13 @@
     <q-card-separator inline />
     <q-card-main>
       <!-- Display the input and setpoint-->
-      <div class='row'>
-        <div class="col-2" />
-        <div class="col-3">
-          <div class='row'>
-            <div class="col-5" />
-            <q-field inverted color="primary" label= "Input" />
-          </div>
-          <q-field>
-            <q-input class="row" inverted readonly color="primary" v-model="input.value" type="number" />
-          </q-field>
-        </div>
-        <div class="col-2" />
-        <div class="col-3">
-          <q-field inverted class="row" color="primary" label= "Setpoint" /> 
-          <q-field>
-            <q-input class="row" inverted readonly color="primary" v-model="input.setPoint" type="number" />
-          </q-field>
-        </div>
-        <div class="col-2" />
+      <div class="row justify-around">
+        <q-field color="primary" label= "Input">
+          <div>{{input.value}}</div>
+        </q-field>
+        <q-field color="primary" label= "setPoint">
+          <q-field color="primary" :label= "input.setPoint | round(2, true)" />
+        </q-field>
       </div>
     </q-card-main>
     <q-card-separator inline />
@@ -154,14 +142,14 @@
           <!-- Settings for the derivative-->
           <div class="row">
             <div class="col-2">
-              <q-field inverted class="row" color="primary" label= "Derivative of error" /> 
+              <q-field inverted class="row" :label-width="11" color="primary" label= "Derivative of error" /> 
               <q-field>
                 <q-input class="row" inverted readonly color="primary" v-model="state.derivative" type="number" />
               </q-field>
             </div>
             <q-field class="col-1" color="primary" label= "x"/>
-            <div class="col-2">
-              <q-field inverted class="row" color="primary" label= "Kp" /> 
+            <div class="col">
+              <q-field inverted class="row center" :label-width="11" color="primary" label= "Kp" /> 
               <q-field>
                 <q-input class="row" inverted color="primary" v-model="settings.Kp" type="number" />
               </q-field>
@@ -285,4 +273,7 @@ export default {
 </script>
 
 <style lang="stylus">
+.center {
+  text-align: center;
+}
 </style>

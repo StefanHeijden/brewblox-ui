@@ -39,6 +39,6 @@
 
 <style scoped lang="stylus">
 .item {
-  background-color: red;
+  background-color: white;
 }
 </style>
