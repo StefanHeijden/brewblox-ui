@@ -1,8 +1,8 @@
 <template>
 <widget-large id="widget-WPid">
    <!-- This card contains information of the PID-->
-  <q-list class="center" @click="$refs.settingsModal.open()" separator sparse>
-    <q-list-header>PID regelaar</q-list-header>
+  <q-list class="center" separator sparse>
+    <q-list-header>PID controller</q-list-header>
     <q-item class="center">
       <q-item-main>
         <q-item-tile label>Input</q-item-tile>
@@ -28,14 +28,16 @@
       </q-item-main>
     </q-item>
     <q-item>
+      <q-item-side></q-item-side>
       <q-item-main class="center">
         <q-item-tile label>Output</q-item-tile>
         <q-item-tile sublabel>{{ output.value | round(2, true) }}</q-item-tile>
       </q-item-main>
+       <q-item-side @click="$refs.settingsModal.open()" icon="build"></q-item-side>
     </q-item>
   </q-list>
 
-  <q-modal ref="settingsModal" maximized>
+  <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '70%'}">
     <!-- This modal displays the settings for the PID when the card is clicked/tapped-->
       <q-modal-layout>
         <q-toolbar slot="header">
@@ -46,124 +48,58 @@
             Settings
           </q-toolbar-title>
         </q-toolbar>
-        <div>
-          <!-- Settings for the input and setpoint-->
-          <div class='row'>
-            <div class="col-4">
-              <q-field inverted class="row" color="primary" label= "Input"> 
-                <q-input class="row" inverted color="primary" v-model="input.value" type="number" />
-              </q-field>
-            </div>
-            <div class="col-2" />
-            <q-field class="col-4" color="primary" label= "Setpoint"> 
-              <q-input inverted color="primary" v-model="input.setPoint" type="number" />
-            </q-field>
+        <q-list sparse>
+          <q-item>          <!-- Settings for the input and setpoint-->
+            <input-block header="Input" :value="input.value"/>
+            <input-block header="Setpoint" :value="input.setPoint"/>
+          </q-item>
+          <div class="center">
+            <q-checkbox v-model="settings.enabled" @click="changeBackground()" label="Enabled"/>
           </div>
-          <q-checkbox v-model="settings.enabled" @click="changeBackground()" label="Settings enabled"/>
-          <hr>
-          <!-- Settings for the filter-->
-          <q-field label="Filtering"/>
+          <q-item>          <!-- Settings for the error-->
+            <read-block header="Error" :value="state.inputError"/>
+            <text-block text="*"/>
+            <input-block header="Kp" :value="settings.Kp"/>
+            <text-block text="="/>
+            <read-block class="col-3" header="P" :value="state.p"/>
+          </q-item>
+          <q-item>          <!-- Settings for the intergral-->
+            <read-block header="Intergral" :value="state.integral"/>
+            <text-block text="/"/>
+            <input-block header="Ti" :value="settings.Ti"/>
+            <text-block text="="/>
+            <read-block class="col-3" header="I" :value="state.i"/>
+          </q-item>
+          <q-item>          <!-- Settings for the derivative-->
+            <read-block header="Derivative * Kp" :value="derivativeKp"/>
+            <text-block text="*"/>
+            <input-block header="Td" :value="settings.Td"/>
+            <text-block text="="/>
+            <read-block class="col-3" header="D" :value="state.d"/>
+          </q-item>
+          <q-item> 
+            <div class="col-9"></div>
+            <read-block class="col-3" header="Output" :value="output.value"/>
+          </q-item> 
+        </q-list>        <!-- Settings for the filter-->
+        <div class="filters">
           <q-field color="primary" label= "Input Filter">
             <q-select v-model="settings.inputFilter" :options="filterSelectOptions"/> 
           </q-field>
           <q-field color="primary" label= "Derivative Filter">
             <q-select v-model="settings.derivativeFilter" :options="filterSelectOptions"/> 
           </q-field>
-          <hr>
-          <!-- Settings for the error-->
-          <div class="row">
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "Error" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.inputError" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-1" color="primary" label= "x"/>
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "Kp" /> 
-              <q-field>
-                <q-input class="row" inverted color="primary" v-model="settings.Kp" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-2" color="primary" label= "="/>
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "P" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.p" type="number" />
-              </q-field>
-            </div>
-          </div>
-          <!-- Settings for the intergral-->
-          <div class="row">
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "Intergral of error" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.integral" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-1" color="primary" label= "/"/>
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "Ti" /> 
-              <q-field>
-                <q-input class="row" inverted color="primary" v-model="settings.Ti" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-2" color="primary" label= "="/>
-            <div class="col-3">
-              <q-field inverted class="row" color="primary" label= "I" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.i" type="number" />
-              </q-field>
-            </div>
-          </div>
-          <!-- Settings for the derivative-->
-          <div class="row">
-            <div class="col-2">
-              <q-field inverted class="row" :label-width="11" color="primary" label= "Derivative of error" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.derivative" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-1" color="primary" label= "x"/>
-            <div class="col">
-              <q-field inverted class="row center" :label-width="11" color="primary" label= "Kp" /> 
-              <q-field>
-                <q-input class="row" inverted color="primary" v-model="settings.Kp" type="number" />
-              </q-field>
-            </div>
-            <q-field class="col-1" color="primary" label= "x"/>
-            <div class="col-2">
-              <q-field inverted class="row" color="primary" label= "Td" /> 
-              <q-field>
-                <q-input class="row" inverted color="primary" v-model="settings.Td" type="number" />
-              </q-field>
-            </div>
-            <div class="col-1">
-              <div class="row" >
-              <p> &nbsp </p>
-              </div>
-              <div class="row" >
-                <div class="col-6" />
-                <q-field class="col-5" color="primary" label= "="/>
-              </div>
-            </div>
-            <div class="col-2">
-              <q-field inverted class="row" color="primary" label= "D" /> 
-              <q-field>
-                <q-input class="row" inverted readonly color="primary" v-model="state.d" type="number" />
-              </q-field>
-            </div>
-          </div>
         </div>
       </q-modal-layout>
-    <q-btn color="primary" @click="$refs.settingsModal.close()">Close</q-btn>
   </q-modal>
 </widget-large>
 </template>
 
 <script>
 import WidgetLarge from './WidgetLarge.vue';
-
+import InputBlock from '../common/InputBlock.vue';
+import ReadBlock from '../common/ReadBlock.vue';
+import TextBlock from '../common/TextBlock.vue';
 import {
   QList,
   QListHeader,
@@ -204,6 +140,9 @@ export default {
     QCheckbox,
     QSelect,
     WidgetLarge,
+    InputBlock,
+    ReadBlock,
+    TextBlock,
   },
   props: {
   },
@@ -245,6 +184,7 @@ export default {
   created() {
   },
   computed: {
+    derivativeKp() { return (this.state.derivative * this.settings.Kp); },
   },
   methods: {
   },
@@ -258,5 +198,8 @@ export default {
 <style lang="stylus">
 .center {
   text-align: center;
+}
+.filters {
+  padding: 10px;
 }
 </style>
