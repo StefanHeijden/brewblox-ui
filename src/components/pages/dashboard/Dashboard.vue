@@ -1,23 +1,23 @@
 <template>
   <div>
-    <muuri-grid id="example-grid">
-      <w-pid />
-      <widget-large id="widget-large2">
+    <muuri-grid>
+      <w-pid/>
+      <widget-large>
         <p>Large widget.</p>
       </widget-large>
-      <widget-large id="widget-large3">
+      <widget-large>
         <p>Large widget.</p>
       </widget-large>
-      <widget-small id="widget-small1">
+      <widget-small>
         <p>Small widget</p>
       </widget-small>
-      <widget-large id="widget-large4">
+      <widget-large>
         <p>Large widget.</p>
       </widget-large>
-      <widget-small id="widget-small2">
+      <widget-small>
         <p>Small widget</p>
       </widget-small>
-      <widget-small id="widget-small3">
+      <widget-small>
         <p>Small widget</p>
       </widget-small>
     </muuri-grid>

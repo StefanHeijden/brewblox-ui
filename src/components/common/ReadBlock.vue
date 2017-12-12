@@ -1,11 +1,7 @@
 <template>
-  <q-item-main>
-    <q-item-tile class="label" label>{{ header }}</q-item-tile>
-    <q-item-tile sublabel>
-      <q-field>
-        <q-input align="center" :readonly="true" color="primary" :value="value" type="number" />
-      </q-field>
-    </q-item-tile>
+  <q-item-main class="center">
+    <q-item-tile label>{{ header }}</q-item-tile>
+    <q-item-tile sublabel>{{ value | round(2, true) }}</q-item-tile>
   </q-item-main>
 </template>
 

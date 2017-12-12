@@ -1,43 +1,27 @@
 <template>
-<widget-large id="widget-WPid">
+<widget-large class="w-pid">
    <!-- This card contains information of the PID-->
-  <q-list class="center" separator sparse>
-    <q-list-header>PID controller</q-list-header>
-    <q-item class="center">
-      <q-item-main>
-        <q-item-tile label>Input</q-item-tile>
-        <q-item-tile sublabel>{{ input.value | round(2, true) }}</q-item-tile>
-      </q-item-main>
-      <q-item-main>
-        <q-item-tile label>Setpoint</q-item-tile>
-        <q-item-tile sublabel>{{ input.setPoint | round(2, true) }}</q-item-tile>
-      </q-item-main>
-    </q-item>
-    <q-item :class="{disabled: !settings.enabled}">
-      <q-item-main class="center">
-        <q-item-tile label>P</q-item-tile>
-        <q-item-tile sublabel>{{ state.p | round(2, true) }}</q-item-tile>
-      </q-item-main>
-      <q-item-main class="center">
-        <q-item-tile label>I</q-item-tile>
-        <q-item-tile sublabel>{{ state.i | round(2, true) }}</q-item-tile>
-      </q-item-main>
-      <q-item-main class="center">
-        <q-item-tile label>D</q-item-tile>
-        <q-item-tile sublabel>{{ state.d | round(2, true) }}</q-item-tile>
-      </q-item-main>
-    </q-item>
+  <q-list separator sparse>
     <q-item>
       <q-item-side></q-item-side>
-      <q-item-main class="center">
-        <q-item-tile label>Output</q-item-tile>
-        <q-item-tile sublabel>{{ output.value | round(2, true) }}</q-item-tile>
-      </q-item-main>
-       <q-item-side @click="$refs.settingsModal.open()" icon="build"></q-item-side>
+      <text-block class="center" text="PID controller"/>
+      <q-item-side @click="$refs.settingsModal.open()" icon="build"></q-item-side>
+    </q-item>
+    <q-item>
+      <read-block header="Input" :value="input.value"/>
+      <read-block header="Setpoint" :value="input.setPoint"/>
+    </q-item>
+    <q-item :class="{disabled: !settings.enabled}">
+      <read-block header="P" :value="state.p"/>
+      <read-block header="I" :value="state.i"/>
+      <read-block header="D" :value="state.d"/>
+    </q-item>
+    <q-item>
+      <read-block header="Output" :value="output.value"/>
     </q-item>
   </q-list>
 
-  <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '70%'}">
+  <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '80%'}">
     <!-- This modal displays the settings for the PID when the card is clicked/tapped-->
       <q-modal-layout>
         <q-toolbar slot="header">
@@ -48,38 +32,44 @@
             Settings
           </q-toolbar-title>
         </q-toolbar>
-        <q-list sparse>
-          <q-item>          <!-- Settings for the input and setpoint-->
+        <q-list>
+          <q-item sparse>          <!-- Settings for the input and setpoint-->
             <input-block header="Input" :value="input.value"/>
             <input-block header="Setpoint" :value="input.setPoint"/>
           </q-item>
           <div class="center">
             <q-checkbox v-model="settings.enabled" @click="changeBackground()" label="Enabled"/>
           </div>
-          <q-item>          <!-- Settings for the error-->
-            <read-block header="Error" :value="state.inputError"/>
+          <q-item :class="{disabled: !settings.enabled}" sparse>          <!-- Settings for the error-->
+            <input-block header="Error" :value="state.inputError" :onlyread="true"/>
             <text-block text="*"/>
             <input-block header="Kp" :value="settings.Kp"/>
             <text-block text="="/>
-            <read-block class="col-3" header="P" :value="state.p"/>
+            <input-block class="col-3" header="P" :value="state.p" :onlyread="true"/>
           </q-item>
-          <q-item>          <!-- Settings for the intergral-->
-            <read-block header="Intergral" :value="state.integral"/>
+          <q-item :class="{disabled: !settings.enabled}" sparse>          <!-- Settings for the intergral-->
+            <input-block header="Intergral" :value="state.integral" :onlyread="true"/>
             <text-block text="/"/>
             <input-block header="Ti" :value="settings.Ti"/>
             <text-block text="="/>
-            <read-block class="col-3" header="I" :value="state.i"/>
+            <input-block class="col-3" header="I" :value="state.i" :onlyread="true"/>
           </q-item>
-          <q-item>          <!-- Settings for the derivative-->
-            <read-block header="Derivative * Kp" :value="derivativeKp"/>
+          <q-item :class="{disabled: !settings.enabled}" class="derivative" sparse>          <!-- Settings for the derivative-->
+            <input-block header="Derivative * Kp" :value="derivativeKp" :onlyread="true"/>
             <text-block text="*"/>
             <input-block header="Td" :value="settings.Td"/>
             <text-block text="="/>
-            <read-block class="col-3" header="D" :value="state.d"/>
+            <input-block class="col-3" header="D" :value="state.d" :onlyread="true"/>
           </q-item>
-          <q-item> 
+          <q-item :class="{disabled: !settings.enabled}" dense> 
+            <div class="col-9 plus">+</div>
+            <q-item-main class="col-3 line">
+              <q-item-tile label>&nbsp</q-item-tile>
+            </q-item-main>
+          </q-item> 
+          <q-item :class="{disabled: !settings.enabled}" sparse> 
             <div class="col-9"></div>
-            <read-block class="col-3" header="Output" :value="output.value"/>
+            <input-block class="col-3" header="Output" :value="output.value" :onlyread="true"/>
           </q-item> 
         </q-list>        <!-- Settings for the filter-->
         <div class="filters">
@@ -195,11 +185,23 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
 .center {
   text-align: center;
 }
 .filters {
   padding: 10px;
+}
+.derivative {
+  padding-bottom: 0px;
+}
+.plus {
+  text-align: right;
+}
+.output {
+  padding-top: 0px;
+}
+.line {
+  border-bottom: solid black 1px;
 }
 </style>

@@ -1,11 +1,6 @@
 <template>
-  <div :id="id" class="item"
-    :style="{
-      'width': '100%',
-      'max-width': width,
-      'height': height,
-    }">
-    <div class="item-content item-sm">
+  <div :id="id" class="widget-small">
+    <div class="content">
       <slot></slot>
     </div>
   </div>
@@ -13,19 +8,11 @@
 
 <script>
   export default {
-    name: 'item-sm',
+    name: 'widget-sm',
     props: {
       id: {
         type: [Number, String],
-        default: 'item-sm',
-      },
-      width: { // width has to be equal to largewidget.width/2 - margin
-        type: String,
-        default: '245px',
-      },
-      height: { // height has to be equal to largewidget.height/2 - margin
-        type: String,
-        default: '245px',
+        default: 'ws',
       },
       onClick: {
         type: Function,
@@ -38,7 +25,34 @@
 </script>
 
 <style scoped lang="stylus">
-.item {
-  background-color: ;
+.widget-small {
+  width: 50vw;
+  padding-bottom: 50vw;
+}
+@media screen and (min-width: 700px) {
+  .widget-small {
+    width: 25vw;
+    padding-bottom: 25vw;
+  }
+}
+@media screen and (min-width: 1050px) {
+  .widget-small {
+    width: 16.65vw;
+    padding-bottom: 16.65vw;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .widget-small {
+    width: 12.5vw;
+    padding-bottom: 12.5vw;
+  }
+}
+.content {
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: 5px;
+  bottom: 5px;
+  background: #eee;
 }
 </style>

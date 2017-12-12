@@ -23,8 +23,9 @@
         type: Object,
         default() {
           return {
-            items: '.item',
+            items: '.muuri-grid > *',
             dragEnabled: true,
+            rounding: false,
           };
         },
       },
@@ -119,30 +120,22 @@
 </script>
 
 <style lang="stylus">
-  .grid {
+  .muuri-grid {
     position: relative;
+    min-height: calc(100vh - 50px);
   }
-  .item {
+  .muuri-item {
     display: block;
     position: absolute;
-    width: 100px;
-    height: 100px;
-    margin: 5px;
     z-index: 1;
-    background: #000;
   }
-  .item.muuri-dragging {
+  .muuri-item-dragging {
     z-index: 3;
   }
-  .item.muuri-releasing {
+  .muuri-item-releasing {
     z-index: 2;
   }
-  .item.muuri-hidden {
+  .muuri-item-hidden {
     z-index: 0;
-  }
-  .item-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
   }
 </style>

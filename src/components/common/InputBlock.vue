@@ -3,7 +3,7 @@
     <q-item-tile class="label" label>{{ header }}</q-item-tile>
     <q-item-tile sublabel>
       <q-field>
-        <q-input align="center" color="primary" :value="value" type="number" />
+        <q-input align="center" :readonly="onlyread" color="primary" :value="value" type="number" />
       </q-field>
     </q-item-tile>
   </q-item-main>
@@ -28,6 +28,10 @@ export default {
   props: {
     header: String,
     value: Number,
+    onlyread: {
+      type: Boolean,
+      default: false,
+    },
   },
   created() {
   },

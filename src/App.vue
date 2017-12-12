@@ -23,7 +23,7 @@
       <div slot="left">
         <MainMenu />
       </div>
-      <div>
+      <div class="content">
         <router-view />
       </div>
     </q-layout>
@@ -74,4 +74,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.content {
+  min-height: calc(100vh - 50px);
+}
+</style>

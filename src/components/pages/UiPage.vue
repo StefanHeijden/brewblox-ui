@@ -1,6 +1,6 @@
 <template>
 <div class="ui-page">
-  <component :is="template" />
+  <component :is="template" class="ui-page-content" />
 </div>
 </template>
 
@@ -39,5 +39,13 @@ export default {
 };
 </script>
 
-<style lang="stylus">
+<style scoped lang="stylus">
+.ui-page {
+  width: 100%;
+  height: 100%;
+}
+.ui-page-content {
+  width: 100%;
+  height: 100%;
+}
 </style>
