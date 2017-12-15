@@ -1,25 +1,17 @@
 <template>
   <div>
     <muuri-grid>
-      <w-pid/>
-      <widget-large>
+      <w-pid :dims="{x: 5, y: 3}" />
+      <w-pid />
+      <widget-wrapper>
         <p>Large widget.</p>
-      </widget-large>
-      <widget-large>
+      </widget-wrapper>
+      <widget-wrapper>
         <p>Large widget.</p>
-      </widget-large>
-      <widget-small>
-        <p>Small widget</p>
-      </widget-small>
-      <widget-large>
+      </widget-wrapper>
+      <widget-wrapper>
         <p>Large widget.</p>
-      </widget-large>
-      <widget-small>
-        <p>Small widget</p>
-      </widget-small>
-      <widget-small>
-        <p>Small widget</p>
-      </widget-small>
+      </widget-wrapper>
     </muuri-grid>
   </div>
 </template>
@@ -29,16 +21,14 @@ import {
 } from 'quasar';
 import WPid from '../../widgets/WPid.vue';
 import MuuriGrid from '../../widgets/MuuriGrid.vue';
-import WidgetLarge from '../../widgets/WidgetLarge.vue';
-import WidgetSmall from '../../widgets/WidgetSmall.vue';
+import WidgetWrapper from '../../widgets/WidgetWrapper.vue';
 
 export default {
   name: 'index',
   components: {
     WPid,
     MuuriGrid,
-    WidgetLarge,
-    WidgetSmall,
+    WidgetWrapper,
   },
   data() {
     return {

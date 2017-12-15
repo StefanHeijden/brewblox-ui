@@ -1,5 +1,5 @@
 <template>
-<widget-large class="w-pid">
+<widget-wrapper :dims="{x: 5, y: 3}" class="w-pid">
    <!-- This card contains information of the PID-->
   <q-list separator sparse>
     <q-item>
@@ -82,11 +82,12 @@
         </div>
       </q-modal-layout>
   </q-modal>
-</widget-large>
+</widget-wrapper>
 </template>
 
 <script>
-import WidgetLarge from './WidgetLarge.vue';
+import VueTypes from 'vue-types';
+import WidgetWrapper from './WidgetWrapper.vue';
 import InputBlock from '../common/InputBlock.vue';
 import ReadBlock from '../common/ReadBlock.vue';
 import TextBlock from '../common/TextBlock.vue';
@@ -129,12 +130,20 @@ export default {
     QField,
     QCheckbox,
     QSelect,
-    WidgetLarge,
+    WidgetWrapper,
     InputBlock,
     ReadBlock,
     TextBlock,
   },
   props: {
+    dims: VueTypes.shape({
+      x: VueTypes.integer,
+      y: VueTypes.integer,
+    }).def({ x: 4, y: 3 }),
+    parentDims: VueTypes.shape({
+      x: VueTypes.integer,
+      y: VueTypes.integer,
+    }).def({ x: 4, y: 3 }),
   },
   data: () => ({
     name: 'heater1pid',
