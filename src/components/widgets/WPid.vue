@@ -1,5 +1,5 @@
 <template>
-<widget-wrapper :dims="{x: 5, y: 3}" class="w-pid">
+<widget-wrapper :tilesWidget="4" :tilesGrid="tilesGrid" class="w-pid">
    <!-- This card contains information of the PID-->
   <q-list separator sparse>
     <q-item>
@@ -136,14 +136,10 @@ export default {
     TextBlock,
   },
   props: {
-    dims: VueTypes.shape({
-      x: VueTypes.integer,
-      y: VueTypes.integer,
-    }).def({ x: 4, y: 3 }),
-    parentDims: VueTypes.shape({
-      x: VueTypes.integer,
-      y: VueTypes.integer,
-    }).def({ x: 4, y: 3 }),
+    tilesGrid: {
+      type: Number,
+      default: 12,
+    },
   },
   data: () => ({
     name: 'heater1pid',
