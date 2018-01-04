@@ -47,9 +47,5 @@ export default {
 </script>
 
 <style lang="stylus">
-.label {
-  text-align: center;
-  font-size: 0.8rem;
-  color: rgba(0,0,0,0.54);
-}
+@import './mixins/Block.styl'
 </style>

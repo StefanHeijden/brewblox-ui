@@ -1,29 +1,33 @@
 <template>
   <div class='muuri-grid' ref="dashboard" v-resize:debounce="onResize">
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
-    <w-pid :tilesGrid="tiles" />
+    <w-pid />
+    <w-pid />
+    <w-pid />
+    <w-pid />
+    <w-pid />
+    <w-pid />
+    <ProcessValue />
+    <ProcessValue />
+    <ProcessValue />
+    <ProcessValue />
   </div>
 </template>
 
 <script>
   import Muuri from 'muuri';
   import WPid from '../../widgets/WPid.vue';
+  import ProcessValue from '../../widgets/ProcessValue.vue';
   import resize from 'vue-resize-directive';
 
   export default {
     name: 'index',
     components: {
       WPid,
+      ProcessValue,
     },
     data() {
       return {
         grid: null,
-        tiles: 12,
       };
     },
     props: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="widgetwrapper" :style="styleCalc"> 
+  <div :style="styleCalc"> 
     <div class="content">
       <slot></slot>
     </div>
@@ -13,10 +13,6 @@ export default {
   name: 'widget-wr',
   data() {
     return {
-      styleObject: {
-        width: this.widthWidget,
-        paddingBottom: this.widthWidget,
-      },
     };
   },
   props: {
@@ -29,18 +25,23 @@ export default {
       type: Number,
       default: 12,
     },
-    tilesWidget: {
+    tilesX: {
+      type: Number,
+      default: 4,
+    },
+    tilesY: {
       type: Number,
       default: 4,
     },
   },
   computed: {
     styleCalc() {
-      const width = `${(Math.min(100, (this.tilesWidget / this.tilesGrid) * 100))}%`;
+      const width = `${(Math.min(100, (this.tilesX / this.tilesGrid) * 100))}%`;
+      const height = `${(Math.min(100, (this.tilesY / this.tilesGrid) * 100))}%`;
       return (
         {
           width,
-          paddingBottom: width,
+          paddingBottom: height,
         }
       );
     },
@@ -49,8 +50,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.widgetwrapper {
-}
 .content {
   position: absolute;
   left: 5px;

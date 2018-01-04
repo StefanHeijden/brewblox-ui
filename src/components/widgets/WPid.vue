@@ -1,10 +1,10 @@
 <template>
-<widget-wrapper :tilesWidget="4" :tilesGrid="tilesGrid" class="w-pid">
+<widget-wrapper :tilesX="4">
    <!-- This card contains information of the PID-->
   <q-list separator sparse>
     <q-item>
       <q-item-side></q-item-side>
-      <text-block class="center" text="PID controller"/>
+      <q-item-main class="center">PID controller</q-item-main>
       <q-item-side @click="$refs.settingsModal.open()" icon="build"></q-item-side>
     </q-item>
     <q-item>
@@ -86,16 +86,15 @@
 </template>
 
 <script>
-import VueTypes from 'vue-types';
 import WidgetWrapper from './WidgetWrapper.vue';
 import InputBlock from '../common/InputBlock.vue';
 import ReadBlock from '../common/ReadBlock.vue';
 import TextBlock from '../common/TextBlock.vue';
+import WidgetLayout from './mixins/WidgetLayout';
 import {
   QList,
   QListHeader,
   QItem,
-  QItemSeparator,
   QItemSide,
   QItemMain,
   QItemTile,
@@ -104,7 +103,6 @@ import {
   QToolbar,
   QToolbarTitle,
   QBtn,
-  QInput,
   QField,
   QCheckbox,
   QSelect,
@@ -113,11 +111,11 @@ import {
 
 export default {
   name: 'WPid',
+  mixins: [WidgetLayout],
   components: {
     QList,
     QListHeader,
     QItem,
-    QItemSeparator,
     QItemSide,
     QItemMain,
     QItemTile,
@@ -126,7 +124,6 @@ export default {
     QToolbar,
     QToolbarTitle,
     QBtn,
-    QInput,
     QField,
     QCheckbox,
     QSelect,
@@ -191,9 +188,7 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.center {
-  text-align: center;
-}
+@import './mixins/Widget.styl'
 .filters {
   padding: 10px;
 }

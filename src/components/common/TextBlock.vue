@@ -1,6 +1,6 @@
 <template>
   <q-item-main>
-    <q-item-tile label>{{ text }}</q-item-tile>
+    <q-item-tile class="label">{{ text }}</q-item-tile>
   </q-item-main>
 </template>
 
@@ -37,9 +37,5 @@ export default {
 </script>
 
 <style lang="stylus">
-.label {
-  text-align: center;
-  font-size: 0.8rem;
-  color: rgba(0,0,0,0.54);
-}
+@import './mixins/Block.styl'
 </style>
