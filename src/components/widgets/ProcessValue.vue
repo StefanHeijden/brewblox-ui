@@ -1,5 +1,5 @@
 <template>
-<widget-wrapper :tilesX="2" :tilesY="2">
+<widget-wrapper :tilesY="tilesY">
   <q-list separator sparse>
     <q-item>
       <q-item-main class="center">ProcessValue</q-item-main>

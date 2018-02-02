@@ -1,5 +1,5 @@
 <template>
-<widget-wrapper :tilesX="4">
+<widget-wrapper :tilesY="tilesY">
    <!-- This card contains information of the PID-->
   <q-list separator sparse>
     <q-item>
@@ -136,6 +136,10 @@ export default {
     tilesGrid: {
       type: Number,
       default: 12,
+    },
+    tilesY: {
+      type: Number,
+      default: 4,
     },
   },
   data: () => ({

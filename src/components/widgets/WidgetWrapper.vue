@@ -25,10 +25,6 @@ export default {
       type: Number,
       default: 12,
     },
-    tilesX: {
-      type: Number,
-      default: 4,
-    },
     tilesY: {
       type: Number,
       default: 4,
@@ -36,11 +32,9 @@ export default {
   },
   computed: {
     styleCalc() {
-      const width = `${(Math.min(100, (this.tilesX / this.tilesGrid) * 100))}%`;
       const height = `${(Math.min(100, (this.tilesY / this.tilesGrid) * 100))}%`;
       return (
         {
-          width,
           paddingBottom: height,
         }
       );
