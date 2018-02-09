@@ -1,5 +1,5 @@
 <template>
-  <div :style="styleCalc"> 
+  <div :class="[classWidth, classHeight]"> 
     <div class="content">
       <slot></slot>
     </div>
@@ -25,31 +25,28 @@ export default {
       type: Number,
       default: 12,
     },
+    tilesX: {
+      type: Number,
+      default: 4,
+    },
     tilesY: {
       type: Number,
       default: 4,
     },
   },
   computed: {
-    styleCalc() {
-      const height = `${(Math.min(100, (this.tilesY / this.tilesGrid) * 100))}%`;
-      return (
-        {
-          paddingBottom: height,
-        }
-      );
-    },
+    classWidth() { return `width${this.tilesX}`; },
+    classHeight() { return `height${this.tilesY}`; },
   },
 };
 </script>
 
 <style scoped lang="stylus">
+.wrapper {
+  position: relative;
+}
+
 .content {
-  position: absolute;
-  left: 5px;
-  right: 5px;
-  top: 5px;
-  bottom: 5px;
-  background: #eee;
+  height: 100%;
 }
 </style>

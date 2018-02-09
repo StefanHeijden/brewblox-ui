@@ -1,8 +1,12 @@
 <template>
-  <div class='grid' ref="dashboard">
-    <div class='w2 h2'> 1 </div>
-    <div class='w2 h2'> 2 </div>
-   <w-pid class='w4 h4' tilesY='4'/>
+  <div class='gridDashboard' ref="dashboard">
+    <div class='width2 height2 border'> 1 </div>
+    <w-pid :tilesY=4 :tilesX=4 class='border' />
+    <div class='width6 height2 border'> 2 </div>
+    <w-pid :tilesY=12 :tilesX=12 class='border' />
+    <div class='width1 height6 border'> 4 </div>
+    <div class='width3 height3 border'> 5 </div>
+    <div class='width2 height7 border'> 6 </div>
   </div>
 </template>
 
@@ -16,8 +20,6 @@
       WPid,
       ProcessValue,
     },
-    data() {
-    },
     props: {
     },
     created() {
@@ -29,4 +31,7 @@
 
 <style >
 @import 'DashboardGrid.css';
+.border {
+  border: 2px solid black;
+}
 </style>

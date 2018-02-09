@@ -1,25 +1,15 @@
 <template>
-<widget-wrapper :tilesY="tilesY">
-   <!-- This card contains information of the PID-->
-  <q-list separator sparse>
-    <q-item>
-      <q-item-side></q-item-side>
-      <q-item-main class="center">PID controller</q-item-main>
-      <q-item-side @click="$refs.settingsModal.open()" icon="build"></q-item-side>
-    </q-item>
-    <q-item>
-      <read-block header="Input" :value="input.value"/>
-      <read-block header="Setpoint" :value="input.setPoint"/>
-    </q-item>
-    <q-item :class="{disabled: !settings.enabled}">
-      <read-block header="P" :value="state.p"/>
-      <read-block header="I" :value="state.i"/>
-      <read-block header="D" :value="state.d"/>
-    </q-item>
-    <q-item>
-      <read-block header="Output" :value="output.value"/>
-    </q-item>
-  </q-list>
+<widget-wrapper :tilesX=tilesX :tilesY=tilesY>
+  <div class="gridWPid" :style="calcRows">
+    <div class="titel">PID controller</div>
+    <q-btn class="settingsButton" round icon="build" color="primary" small @click="$refs.settingsModal.open()"/>
+    <read-block class="input" header="Input" :value="input.value"/>
+    <read-block class="setPoint" header="Setpoint" :value="input.setPoint"/>
+      <read-block class="error" header="P" :value="state.p"/>
+      <read-block class="intergral" header="I" :value="state.i"/>
+      <read-block class="derative" header="D" :value="state.d"/>
+    <read-block class="output" header="Output" :value="output.value"/>
+  </div>
 
   <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '80%'}">
     <!-- This modal displays the settings for the PID when the card is clicked/tapped-->
@@ -133,14 +123,6 @@ export default {
     TextBlock,
   },
   props: {
-    tilesGrid: {
-      type: Number,
-      default: 12,
-    },
-    tilesY: {
-      type: Number,
-      default: 4,
-    },
   },
   data: () => ({
     name: 'heater1pid',
@@ -181,6 +163,11 @@ export default {
   },
   computed: {
     derivativeKp() { return (this.state.derivative * this.settings.Kp); },
+    calcRows() {
+      const pixelsRow = this.tilesY * (100 / this.tilesX);
+      console.log(document.querySelector('.gridWPid').width); /* NaN??? proprably the this.width */
+      return `grid-template-rows: repeat(4, ${pixelsRow}px)`; /* works with numbers but  */
+    },
   },
   methods: {
   },
@@ -193,6 +180,7 @@ export default {
 
 <style scoped lang="stylus">
 @import './mixins/Widget.styl'
+@import './mixins/WidgetGrid.css'
 .filters {
   padding: 10px;
 }
