@@ -1,7 +1,7 @@
 <template>
   <div class='gridDashboard' ref="dashboard">
-    <div class='width2 height2 border'> 1 </div>
-    <w-pid :tilesY=4 :tilesX=4 class='border' />
+    <process-value :tilesY=2 :tilesX=2 class='border' />
+    <w-pid :tilesY=5 :tilesX=4 class='border' />
     <div class='width6 height2 border'> 2 </div>
     <w-pid :tilesY=12 :tilesX=12 class='border' />
     <div class='width1 height6 border'> 4 </div>
@@ -29,9 +29,11 @@
   };
 </script>
 
-<style >
+<style>
 @import 'DashboardGrid.css';
+
 .border {
   border: 2px solid black;
 }
+
 </style>

@@ -8,8 +8,6 @@
 import {
   QItemMain,
   QItemTile,
-  QField,
-  QInput,
 } from 'quasar';
 
 export default {
@@ -17,8 +15,6 @@ export default {
   components: {
     QItemMain,
     QItemTile,
-    QField,
-    QInput,
   },
   props: {
     text: String,

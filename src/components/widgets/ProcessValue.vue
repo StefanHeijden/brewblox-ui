@@ -1,14 +1,10 @@
 <template>
-<widget-wrapper :tilesY="tilesY">
-  <q-list separator sparse>
-    <q-item>
-      <q-item-main class="center">ProcessValue</q-item-main>
-    </q-item>
-    <q-item>
-      <read-block header="Settings" :value="settings"/>
-      <read-block header="Value" :value="value"/>
-    </q-item>
-  </q-list>
+<widget-wrapper :tilesX="tilesX" :tilesY="tilesY">
+  <div class="row justify-around titel">ProcessValue</div>
+  <div class="row justify-around">
+    <read-block header="Settings" :value="settings"/>
+    <read-block header="Value" :value="value"/>
+  </div>
 </widget-wrapper>
 </template>
 
@@ -58,4 +54,9 @@ export default {
 
 <style scoped lang="stylus">
 @import './mixins/Widget.styl'
+
+.flex-content > *
+  display: flex
+  height: 100%
+
 </style>

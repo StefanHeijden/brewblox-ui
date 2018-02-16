@@ -1,17 +1,24 @@
 <template>
 <widget-wrapper :tilesX=tilesX :tilesY=tilesY>
-  <div class="gridWPid" :style="calcRows">
+  <div class="row justify-between">
+    <div class="col-1"/>
     <div class="titel">PID controller</div>
-    <q-btn class="settingsButton" round icon="build" color="primary" small @click="$refs.settingsModal.open()"/>
-    <read-block class="input" header="Input" :value="input.value"/>
-    <read-block class="setPoint" header="Setpoint" :value="input.setPoint"/>
-      <read-block class="error" header="P" :value="state.p"/>
-      <read-block class="intergral" header="I" :value="state.i"/>
-      <read-block class="derative" header="D" :value="state.d"/>
-    <read-block class="output" header="Output" :value="output.value"/>
+    <div  class="col-1">
+      <q-btn round class="float-right" icon="build" color="primary" small @click="$refs.settingsModal.open()"/>
+    </div>
   </div>
+  <div class="row justify-around">
+    <read-block class="col-4" header="Input" :value="input.value"/>
+    <read-block class="col-4" header="Setpoint" :value="input.setPoint"/>
+  </div>
+  <div class="row justify-around">
+    <read-block class="col-3" header="P" :value="state.p"/>
+    <read-block class="col-3" header="I" :value="state.i"/>
+    <read-block class="col-3" header="D" :value="state.d"/>
+  </div>
+  <read-block class="justify-center" header="Output" :value="output.value"/>
 
-  <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '80%'}">
+  <q-modal ref="settingsModal" :content-css="{minWidth: '50%', minHeight: '90%'}">
     <!-- This modal displays the settings for the PID when the card is clicked/tapped-->
       <q-modal-layout>
         <q-toolbar slot="header">
@@ -52,9 +59,10 @@
             <input-block class="col-3" header="D" :value="state.d" :onlyread="true"/>
           </q-item>
           <q-item :class="{disabled: !settings.enabled}" dense> 
-            <div class="col-9 plus">+</div>
+            <div class="col-9 plus"></div>
+            <read-block class="col-3 line" text="+"/>
             <q-item-main class="col-3 line">
-              <q-item-tile label>&nbsp</q-item-tile>
+              <q-item-tile label>+</q-item-tile>
             </q-item-main>
           </q-item> 
           <q-item :class="{disabled: !settings.enabled}" sparse> 
@@ -83,9 +91,7 @@ import TextBlock from '../common/TextBlock.vue';
 import WidgetLayout from './mixins/WidgetLayout';
 import {
   QList,
-  QListHeader,
   QItem,
-  QItemSide,
   QItemMain,
   QItemTile,
   QModal,
@@ -104,9 +110,7 @@ export default {
   mixins: [WidgetLayout],
   components: {
     QList,
-    QListHeader,
     QItem,
-    QItemSide,
     QItemMain,
     QItemTile,
     QModal,
@@ -163,11 +167,6 @@ export default {
   },
   computed: {
     derivativeKp() { return (this.state.derivative * this.settings.Kp); },
-    calcRows() {
-      const pixelsRow = this.tilesY * (100 / this.tilesX);
-      console.log(document.querySelector('.gridWPid').width); /* NaN??? proprably the this.width */
-      return `grid-template-rows: repeat(4, ${pixelsRow}px)`; /* works with numbers but  */
-    },
   },
   methods: {
   },
@@ -180,20 +179,20 @@ export default {
 
 <style scoped lang="stylus">
 @import './mixins/Widget.styl'
-@import './mixins/WidgetGrid.css'
-.filters {
-  padding: 10px;
-}
-.derivative {
-  padding-bottom: 0px;
-}
-.plus {
-  text-align: right;
-}
-.output {
-  padding-top: 0px;
-}
-.line {
-  border-bottom: solid black 1px;
-}
+
+.filters
+   padding 10px
+
+.derivative
+   padding-bottom 0px
+
+.plus
+   text-align right
+
+.output
+   padding-top 0px
+
+.line
+  border-bottom solid black 1px
+
 </style>

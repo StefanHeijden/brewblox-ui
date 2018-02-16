@@ -42,11 +42,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.wrapper {
-  position: relative;
-}
-
-.content {
-  height: 100%;
-}
+.content
+  min-height 100%
 </style>
