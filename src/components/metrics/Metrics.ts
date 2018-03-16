@@ -21,14 +21,31 @@ export default class Metrics extends Vue {
   plotly = {
     data: [
       {
-        type: 'bar',
-        x: [1, 2, 3],
+        type: 'scatter',
+        x: ['2013-10-04 22:23:00', '2013-10-05 22:23:00', '2013-10-06 22:23:00'],
         y: [2, 5, 3],
       },
     ],
     layout: {
       title: 'A Fancy Plot',
+      font: {
+        color: '#fffafa'
+      },
+      paper_bgcolor: '#24333d',
+      plot_bgcolor: '#24333d',
+      xaxis: {
+        gridcolor: '#7F7F7F',
+      },
+      spikedash: 'dot',
+      yaxis: {
+        gridcolor: '#7F7F7F',
+      },
     },
+    restyle: {
+      '.modebar': {
+        "background-color": 'white',
+      }
+    }
   };
 
   get blockData() {
@@ -54,7 +71,7 @@ export default class Metrics extends Vue {
       () => {
         this.$set(this.plotly, 'data', [
           {
-            type: 'bar',
+            type: 'scatter',
             x: [...this.plotly.data[0].x, this.plotly.data[0].x.length + 1],
             y: [...this.plotly.data[0].y, Math.floor(Math.random() * Math.floor(10))],
           },

@@ -12,12 +12,19 @@
       <Plotly
         :data="plotly.data"
         :layout="plotly.layout"
+        :restyle="plotly.restyle"
         fit
       />
-
-      <button @click="updateData">auto update</button>
+      <q-btn
+        color="block-background"
+        label="auto update"
+        @click="updateData"/>
     </template>
   </div>
 </template>
 
 <script lang="ts" src="./Metrics.ts"></script>
+
+<style lang="stylus">
+@import "../../css/themes/dark.variables"
+</style>
