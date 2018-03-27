@@ -2,6 +2,7 @@
 
 @import './themes/dark.variables'
 
+// Background for the blocks
 .q-layout-page > *
   background-color $block-background
 
@@ -15,9 +16,19 @@
   color $standard-text-color
   background-color $block-background
 
+// q-button
 .bg-block-background
  background $block-background
 
+// plotly modebar
 .modebar
-  background-color $block-background
-  color $standard-text-color
+  background-color $block-background !important
+
+.modebar-btn path
+   fill $standard-text-color !important
+
+.modebar-btn &:hover path
+  fill $primary !important
+
+.modebar-btn.active path
+  fill $primary !important

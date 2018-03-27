@@ -26,5 +26,5 @@
 <script lang="ts" src="./Metrics.ts"></script>
 
 <style lang="stylus">
-@import "../../css/themes/dark.variables"
+
 </style>

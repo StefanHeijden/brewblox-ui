@@ -6,6 +6,9 @@ import Plotly from './plotly';
 import { getById } from '../../store/blocks/OneWireTempSensor/getters';
 import { findBlockWithMetrics } from '../../store/blocks/actions';
 
+var currentdate = new Date().getTime();
+var startdate = currentdate-10000000000;
+
 @Component({
   props: {
     id: {
@@ -22,8 +25,17 @@ export default class Metrics extends Vue {
     data: [
       {
         type: 'scatter',
-        x: ['2013-10-04 22:23:00', '2013-10-05 22:23:00', '2013-10-06 22:23:00'],
-        y: [2, 5, 3],
+        mode: "lines",
+        name: 'trace0',
+        x: this.testDatax(),
+        y: this.testDatay(),
+      },
+      {
+        type: 'scatter',
+        mode: "lines",
+        name: 'trace1',
+        x: this.testDatax(),
+        y: this.testDatay(),
       },
     ],
     layout: {
@@ -33,6 +45,10 @@ export default class Metrics extends Vue {
       },
       paper_bgcolor: '#24333d',
       plot_bgcolor: '#24333d',
+      line: {
+        width: 6,
+        color: '#fffafa'
+      },
       xaxis: {
         gridcolor: '#7F7F7F',
       },
@@ -41,11 +57,6 @@ export default class Metrics extends Vue {
         gridcolor: '#7F7F7F',
       },
     },
-    restyle: {
-      '.modebar': {
-        "background-color": 'white',
-      }
-    }
   };
 
   get blockData() {
@@ -66,18 +77,51 @@ export default class Metrics extends Vue {
     }
   }
 
+  testDatax(){
+    var data = [];
+    var i;
+    for(i=startdate; i< currentdate;i = i + 1000000){
+      var date = new Date(i);
+      data.push(date.toLocaleDateString() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds());
+    }
+    return data;
+  }
+
+  testDatay(){
+    var data = [];
+    var i = 0;
+    var y = 0;
+    for(i=startdate; i< currentdate;i = i + 1000000){
+      y = y + Math.random() * 10 - 5;
+      data.push(y);
+    }
+    return data;
+  }
+
+  getDate(){
+    var date = new Date();
+    return date.toLocaleDateString() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  }
+
+  nextData(key:any, date:any) {
+    return {
+      type: 'scatter',
+      mode: "lines",
+      name: 'trace' + key,
+      x: [...this.plotly.data[key].x, date],
+      y: [...this.plotly.data[key].y, this.plotly.data[key].y[this.plotly.data[key].y.length-1] + Math.random() * 10 - 5],
+    };
+  }
+
   updateData() {
     setInterval(
       () => {
-        this.$set(this.plotly, 'data', [
-          {
-            type: 'scatter',
-            x: [...this.plotly.data[0].x, this.plotly.data[0].x.length + 1],
-            y: [...this.plotly.data[0].y, Math.floor(Math.random() * Math.floor(10))],
-          },
-        ]);
+          this.$set(this.plotly, 'data', 
+          [this.nextData(0, this.getDate()), 
+            this.nextData(1, this.getDate())
+          ]);
       },
-      10,
+      1000,
     );
   }
 }
